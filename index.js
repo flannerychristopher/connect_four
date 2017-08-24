@@ -1,6 +1,9 @@
 const containerElement = document.getElementById('container');
 
 const game = {
+	playerTurn: 1,
+	player1: [],
+	player2: [],
 
 	render: function() {
 		for (i =0; i < 7; i++) {
@@ -16,6 +19,11 @@ const game = {
 			div.id = `box${i}`;
 			containerElement.appendChild(div);
 		}
+	},
+
+	handler: function() {
+		console.log('test');
 	}
+
 }
 game.render();
