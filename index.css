@@ -1,3 +1,21 @@
+body {
+  background: blue; }
 
+#container {
+  width: 490px;
+  margin: 0 auto; }
+  #container div.box {
+    border-radius: 50%; }
+  #container div:nth-child(odd) {
+    background: #999; }
+  #container div:nth-child(even) {
+    background: #888; }
+  #container div.drop {
+    background: green; }
+
+.box {
+  width: 70px;
+  height: 70px;
+  float: left; }
 
 /*# sourceMappingURL=index.css.map */
