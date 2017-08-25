@@ -25,31 +25,25 @@ const game = {
 	},
 
 	handler: function(event) {
+		let currentPlayer;
+		playerTurn === 1 ? currentPlayer = player1 : currentPlayer = player2;
 		let colNum = event.target.id[4];
 		let coordinate = board[colNum][0];
-		if (playerTurn === 1) {
-			player1.push(coordinate);
-			board[colNum].shift();
-			game.update();
-			playerTurn = 2;
-		} else if (playerTurn === 2) {
-			player2.push(coordinate);
-			board[colNum].shift();
-			game.update();
-			playerTurn = 1;
-		}
+
+		currentPlayer.push(coordinate);
+		board[colNum].shift();
+		game.update(currentPlayer);
+		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
+
 		console.log(`clicked on column ${colNum} : coordinate ${coordinate}`);
 		console.log(`p1 has : ${player1}`);
 		console.log(`p2 has : ${player2}`);
 		console.log(`column ${colNum} is now ${board[colNum]}`);
 	},
 
-	update: function() {
-		let player;
-		playerTurn === 1 ? player = player1 : player = player2 ;
-		console.log('player is ' + playerTurn);
-		for (i = 0; i < player.length; i++) {
-			let divId = player[i].toString();
+	update: function(currentPlayer) {
+		for (i = 0; i < currentPlayer.length; i++) {
+			let divId = currentPlayer[i].toString();
 			let div = document.getElementById(divId);
 			div.className += ` player${playerTurn}`;
 			game.checkWin(i);
