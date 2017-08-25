@@ -45,26 +45,36 @@ const game = {
 	},
 
 	update: function() {
-		for (i = 0; i < player1.length; i++) {
-			let divId = player1[i].toString();
+		let player;
+		playerTurn === 1 ? player = player1 : player = player2 ;
+		console.log('player is ' + playerTurn);
+		for (i = 0; i < player.length; i++) {
+			let divId = player[i].toString();
 			let div = document.getElementById(divId);
-			div.className += ' player1';
-		}
-		for (i = 0; i < player2.length; i++) {
-			let divId = player2[i].toString();
-			let div = document.getElementById(divId);
-			div.className += ' player2';
+			div.className += ` player${playerTurn}`;
+			game.checkWin(i);
 		}
 	},
 
 	searchArrayForItem: function(array, item) {
 		for (let i = 0; i < array.length; i++) {
 			if (array[i][0] === item[0] && array[i][1] === item[1]) {
-				console.log('present');
 				return true;
 			}
 		}
 		return false; // item not found in array
+	},
+
+	checkWin: function(i) {
+		let above1 = [player1[i][0], player1[i][1] + 1];
+		let above2 = [player1[i][0], player1[i][1] + 2];
+		let above3 = [player1[i][0], player1[i][1] + 3];
+		
+		if (game.searchArrayForItem(player1, above1) && 
+			game.searchArrayForItem(player1, above2) && 
+			game.searchArrayForItem(player1, above3)) {
+			console.log('-------------win------------');
+		}
 	}
 
 }
