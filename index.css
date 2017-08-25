@@ -11,6 +11,8 @@
     background: green; }
   #container div.player1 {
     background: blue; }
+  #container div.player2 {
+    background: red; }
 
 .box {
   width: 70px;
