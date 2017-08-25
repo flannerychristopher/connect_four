@@ -1,10 +1,14 @@
 const containerElement = document.getElementById('container');
 let playerTurn = 1;
 const board = [ [], [], [], [], [], [], [] ];
-const player1 = [];
-const player1win = [];
-const player2 = [];
-const player2win = [];
+const player1 = {
+	owns: [],
+	wins: [],
+}
+const player2 = {
+	owns: [],
+	wins: [],
+}
 let win = false;
 
 const game = {
@@ -33,7 +37,7 @@ const game = {
 		let colNum = event.target.id[4];
 		let coordinate = board[colNum][0];
 
-		currentPlayer.push(coordinate);
+		currentPlayer.owns.push(coordinate);
 		board[colNum].shift();
 		game.update(currentPlayer);
 		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
@@ -45,8 +49,8 @@ const game = {
 	},
 
 	update: function(currentPlayer) {
-		for (i = 0; i < currentPlayer.length; i++) {
-			let divId = currentPlayer[i].toString();
+		for (i = 0; i < currentPlayer.owns.length; i++) {
+			let divId = currentPlayer.owns[i].toString();
 			let div = document.getElementById(divId);
 			div.className += ` player${playerTurn}`;
 		}
@@ -63,7 +67,7 @@ const game = {
 	},
 
 	compareArrays: function(winArray, currentPlayer) {
-		for (let i = 0; i < currentPlayer.length; i++) {
+		for (let i = 0; i < currentPlayer.owns.length; i++) {
 			let item = currentPlayer[i];
 
 			if (game.searchArrayForItem(winArray, item)) {
@@ -78,28 +82,16 @@ const game = {
 
 	checkWin: function(currentPlayer) {
 		if (playerTurn === 1 ) {
-			for (let i = 0; i < currentPlayer.length; i++) {
+			for (let i = 0; i < currentPlayer.owns.length; i++) {
 				for (let j = 1; j <= 3; j++) {
-					let solution = [currentPlayer[i][0], currentPlayer[i][1] + j];
-					if (!game.searchArrayForItem(player1win, solution)) {
-						player1win.push(solution);
+					let solution = [currentPlayer.owns[i][0], currentPlayer.owns[i][1] + j];
+					if (!game.searchArrayForItem(currentPlayer.wins, solution)) {
+						currentPlayer.wins.push(solution);
 					}
 				}			
 			}
-
-			console.log(player1win);			
+			console.log(currentPlayer.wins);			
 		}
-
-
-		// if (game.compareArrays(vertical, currentPlayer)) {
-		// 	console.log('-----------win-----------');
-		// }
-		
-		// if (game.searchArrayForItem(currentPlayer, vertical[0]) && 
-		// 	game.searchArrayForItem(currentPlayer, vertical[1]) && 
-		// 	game.searchArrayForItem(currentPlayer, vertical[2])) {
-		// 	console.log('-------------win------------');
-		// }
 	}
 
 }
