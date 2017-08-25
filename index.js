@@ -1,11 +1,10 @@
 const containerElement = document.getElementById('container');
+let playerTurn = 1;
+const board = [ [], [], [], [], [], [], [] ];
+const player1 = [];
+const player2 = [];
 
 const game = {
-	playerTurn: 1,
-	board: [ [], [], [], [], [], [], [] ],
-	player1: [],
-	player2: [],
-
 	render: function() {
 		for (i =0; i < 7; i++) {
 			let div = document.createElement('div');
@@ -20,20 +19,25 @@ const game = {
 				div.className = 'box';
 				div.id = `${j}-${i}`;
 				containerElement.appendChild(div);
-				game.board[i].push([j]);
-
+				board[i].push([i, j]);
 			}
 		}
 	},
 
-	handler: function() {
-		if (game.playerTurn === 1) {
-			console.log('p1 turn');
-			game.player1.push()
-			game.playerTurn = 2;
-		} else if (game.playerTurn === 2) {
+	handler: function(event) {
+		if (playerTurn === 1) {
+			let colNum = event.target.id[4];
+			let boxNum = board[colNum][0];
+			player1.push(boxNum);
+			board[colNum].shift();
+			playerTurn = 2;
+			
+			console.log(`p1 turn, column ${colNum} : coordinate ${boxNum}`);
+			console.log(`p1 has : ${player1}`);
+			console.log(`column ${colNum} is now ${board[colNum]}`);
+		} else if (playerTurn === 2) {
 			console.log('p2 turn');
-			game.playerTurn = 1;
+			playerTurn = 1;
 		}
 	}
 
