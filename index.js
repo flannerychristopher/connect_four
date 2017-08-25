@@ -2,7 +2,7 @@ const containerElement = document.getElementById('container');
 
 const game = {
 	playerTurn: 1,
-	board: [],
+	board: [ [], [], [], [], [], [], [] ],
 	player1: [],
 	player2: [],
 
@@ -14,20 +14,28 @@ const game = {
 			div.addEventListener('click', this.handler, false);
 			containerElement.appendChild(div);
 		}
-		for (i = 0; i < 6; i++) {
+		for (i = 5; i >= 0; i--) {
 			for (j = 0; j < 7; j++) {
 				let div = document.createElement('div');
 				div.className = 'box';
-				div.id = `${i}-${j}`;
+				div.id = `${j}-${i}`;
 				containerElement.appendChild(div);
-				game.board.push([i, j]);
+				game.board[i].push([j]);
+
 			}
 		}
 	},
 
 	handler: function() {
-		console.log('test');
+		if (game.playerTurn === 1) {
+			console.log('p1 turn');
+			game.player1.push()
+			game.playerTurn = 2;
+		} else if (game.playerTurn === 2) {
+			console.log('p2 turn');
+			game.playerTurn = 1;
+		}
 	}
-	
+
 }
 game.render();
