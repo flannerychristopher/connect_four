@@ -1,15 +1,8 @@
 const containerElement = document.getElementById('container');
 let playerTurn = 1;
 const board = [ [], [], [], [], [], [], [] ];
-const player1 = {
-	owns: [],
-	wins: [],
-}
-const player2 = {
-	owns: [],
-	wins: [],
-}
-let win = false;
+const player1 = [];
+const player2 = [];
 
 const game = {
 	render: function() {
@@ -37,7 +30,7 @@ const game = {
 		let colNum = event.target.id[4];
 		let coordinate = board[colNum][0];
 
-		currentPlayer.owns.push(coordinate);
+		currentPlayer.push(coordinate);
 		board[colNum].shift();
 		game.update(currentPlayer);
 		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
@@ -49,12 +42,35 @@ const game = {
 	},
 
 	update: function(currentPlayer) {
-		for (i = 0; i < currentPlayer.owns.length; i++) {
-			let divId = currentPlayer.owns[i].toString();
+		for (i = 0; i < currentPlayer.length; i++) {
+			let divId = currentPlayer[i].toString();
 			let div = document.getElementById(divId);
 			div.className += ` player${playerTurn}`;
 		}
 		game.checkWin(currentPlayer);
+	},
+
+	checkWin: function(currentPlayer) {
+		game.compareArrays(currentPlayer);
+		
+	},
+
+	compareArrays: function(currentPlayer) {
+		for (let i = 0; i < currentPlayer.length; i++) {
+			let item = currentPlayer[i];
+			let possibWins = game.findWins(item);
+		}
+
+	},
+
+	findWins: function(item) {
+		let possibleWins = [];
+		for (let i = -4; i < 5; i++) {
+		    possibleWins.push([item[0], item[1] + i], [item[0] + i, item[1] + i],
+		                      [item[0] + i, item[1]], [item[0] + i, item[1] - i]);
+		}
+	    console.log('possible wins ' + possibleWins);
+	    return possibleWins;
 	},
 
 	searchArrayForItem: function(array, item) {
@@ -63,36 +79,10 @@ const game = {
 				return true;
 			}
 		}
-		return false; // item not found in array
+		return false;
 	},
-
-	compareArrays: function(winArray, currentPlayer) {
-		for (let i = 0; i < currentPlayer.owns.length; i++) {
-			let item = currentPlayer[i];
-
-			if (game.searchArrayForItem(winArray, item)) {
-				console.log('match');
-				return true;
-			} else {
-				return false;
-			}
-		}
-		// return false;
-	},
-
-	checkWin: function(currentPlayer) {
-		if (playerTurn === 1 ) {
-			for (let i = 0; i < currentPlayer.owns.length; i++) {
-				for (let j = 1; j <= 3; j++) {
-					let solution = [currentPlayer.owns[i][0], currentPlayer.owns[i][1] + j];
-					if (!game.searchArrayForItem(currentPlayer.wins, solution)) {
-						currentPlayer.wins.push(solution);
-					}
-				}			
-			}
-			console.log(currentPlayer.wins);			
-		}
-	}
 
 }
 game.render();
+
+
