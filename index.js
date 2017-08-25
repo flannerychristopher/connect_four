@@ -46,7 +46,7 @@ const game = {
 			let divId = currentPlayer[i].toString();
 			let div = document.getElementById(divId);
 			div.className += ` player${playerTurn}`;
-			game.checkWin(i);
+			game.checkWin(currentPlayer, i);
 		}
 	},
 
@@ -59,14 +59,14 @@ const game = {
 		return false; // item not found in array
 	},
 
-	checkWin: function(i) {
-		let above1 = [player1[i][0], player1[i][1] + 1];
-		let above2 = [player1[i][0], player1[i][1] + 2];
-		let above3 = [player1[i][0], player1[i][1] + 3];
+	checkWin: function(currentPlayer, i) {
+		let above1 = [currentPlayer[i][0], currentPlayer[i][1] + 1];
+		let above2 = [currentPlayer[i][0], currentPlayer[i][1] + 2];
+		let above3 = [currentPlayer[i][0], currentPlayer[i][1] + 3];
 		
-		if (game.searchArrayForItem(player1, above1) && 
-			game.searchArrayForItem(player1, above2) && 
-			game.searchArrayForItem(player1, above3)) {
+		if (game.searchArrayForItem(currentPlayer, above1) && 
+			game.searchArrayForItem(currentPlayer, above2) && 
+			game.searchArrayForItem(currentPlayer, above3)) {
 			console.log('-------------win------------');
 		}
 	}
