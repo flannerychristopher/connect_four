@@ -51,11 +51,6 @@ const game = {
 	},
 
 	checkWin: function(currentPlayer) {
-		game.compareArrays(currentPlayer);
-		
-	},
-
-	compareArrays: function(currentPlayer) {
 		for (let i = 0; i < currentPlayer.length; i++) {
 			let item = currentPlayer[i];
 			console.log(item);
@@ -73,13 +68,8 @@ const game = {
 	findWins: function(item) {
 		let possibleWins = [];
 		for (let i = -4; i < 5; i++) {
-		    
-		    let items = [[item[0], item[1] + i], 
-		                [item[0] + i, item[1] + i],
-		                [item[0] + i, item[1]],
-		                [item[0] + i, item[1] - i]];
-		    // console.log(items);
-		                
+		    let items = [[item[0], item[1] + i], [item[0] + i, item[1] + i],
+		                [item[0] + i, item[1]], [item[0] + i, item[1] - i]];
 		    for (let i = 0; i < items.length; i++) {
 			    if (!game.searchArrayForItem(possibleWins, items[i])) {
 			    	possibleWins.push(items[i]);
