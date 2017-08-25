@@ -54,7 +54,7 @@ const game = {
 		for (let i = 0; i < currentPlayer.length; i++) {
 			let item = currentPlayer[i];
 			let possibleWins = game.findWins(item);
-			// console.log(possibleWins.join(' '));
+			console.log(possibleWins.join(' ------------- '));
 			let connect4 = 0;
 
 			for (let i = 0; i < currentPlayer.length; i++) {	
@@ -68,16 +68,26 @@ const game = {
 
 	},
 
-	findWins: function(item) {
-		let possibleWins = [];
-		for (let i = -4; i < 5; i++) {
-		    let items = [[item[0], item[1] + i], [item[0] + i, item[1] + i],
-		                [item[0] + i, item[1]], [item[0] + i, item[1] - i]];
-		    for (let i = 0; i < items.length; i++) {
-			    if (!game.searchArrayForItem(possibleWins, items[i])) {
-			    	possibleWins.push(items[i]);
-			    }
-		    }
+	findWins: function(source) {
+		let possibleWins =  [	[ [], [], [], [], [], [] ],
+		                    	[ [], [], [], [], [], [] ],
+		                    	[ [], [], [], [], [], [] ],
+		                    	[ [], [], [], [], [], [] ],		];
+
+		for (i = 0; i < 6; i++) {
+		    for (j = -4; j < 0; j++) {
+		      let item0 = [source[0], source[1] + j + i];
+		      possibleWins[0][i].push(item0);
+		      
+		      let item1 = [source[0] + j + i, source[1] + j + i];
+		      possibleWins[1][i].push(item1);
+		      
+		      let item2 = [source[0] + j + i, source[1]];
+		      possibleWins[2][i].push(item2);      
+
+		      let item3 = [source[0] - j - i, source[1] - j - i];
+		      possibleWins[3][i].push(item3);  
+		    }    
 		}
 		return possibleWins;
 	},
