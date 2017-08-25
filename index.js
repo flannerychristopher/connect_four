@@ -53,14 +53,17 @@ const game = {
 	checkWin: function(currentPlayer) {
 		for (let i = 0; i < currentPlayer.length; i++) {
 			let item = currentPlayer[i];
-			console.log(item);
-
 			let possibleWins = game.findWins(item);
-			console.log(possibleWins);
-			
-			if (game.searchArrayForItem(possibleWins, item)) {
-				console.log('match!');
+			// console.log(possibleWins.join(' '));
+			let connect4 = 0;
+
+			for (let i = 0; i < currentPlayer.length; i++) {	
+				if (game.searchArrayForItem(possibleWins, currentPlayer[i])) {
+					connect4 += 1;
+					// console.log(connect4);
+				}
 			}
+			if (connect4 === 4) console.log('---------win!-----------');
 		}
 
 	},
