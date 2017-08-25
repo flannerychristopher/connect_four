@@ -17,7 +17,7 @@ const game = {
 			for (j = 0; j < 7; j++) {
 				let div = document.createElement('div');
 				div.className = 'box';
-				div.id = `${j}-${i}`;
+				div.id = `${j},${i}`;
 				containerElement.appendChild(div);
 				board[i].push([i, j]);
 			}
@@ -30,8 +30,9 @@ const game = {
 			let boxNum = board[colNum][0];
 			player1.push(boxNum);
 			board[colNum].shift();
+			game.update();
 			playerTurn = 2;
-			
+
 			console.log(`p1 turn, column ${colNum} : coordinate ${boxNum}`);
 			console.log(`p1 has : ${player1}`);
 			console.log(`column ${colNum} is now ${board[colNum]}`);
@@ -39,6 +40,16 @@ const game = {
 			console.log('p2 turn');
 			playerTurn = 1;
 		}
+	},
+
+	update: function() {
+		for (i = 0; i < player1.length; i++) {
+			let divId = player1[i].toString();
+			console.log(divId);
+			let div = document.getElementById(divId);
+			div.className += ' player1';
+		}
+
 	}
 
 }
