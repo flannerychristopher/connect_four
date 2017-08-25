@@ -47,7 +47,6 @@ const game = {
 	update: function() {
 		for (i = 0; i < player1.length; i++) {
 			let divId = player1[i].toString();
-			console.log(divId);
 			let div = document.getElementById(divId);
 			div.className += ' player1';
 		}
@@ -56,6 +55,16 @@ const game = {
 			let div = document.getElementById(divId);
 			div.className += ' player2';
 		}
+	},
+
+	searchArrayForItem: function(array, item) {
+		for (let i = 0; i < array.length; i++) {
+			if (array[i][0] === item[0] && array[i][1] === item[1]) {
+				console.log('present');
+				return true;
+			}
+		}
+		return false; // item not found in array
 	}
 
 }
