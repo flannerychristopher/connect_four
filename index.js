@@ -1,12 +1,12 @@
 const boardElement = document.getElementById('board');
 const dropElement = document.getElementById('drop');
 const messageElement = document.getElementById('message');
+let playerTurn = 1;
 
 function Game() {
 	this.board = [ [], [], [], [], [], [], [] ];
 	this.player1 = [];
 	this.player2 = [];
-	this.playerTurn = 1;
 }
 
 Game.prototype = {
@@ -17,7 +17,7 @@ Game.prototype = {
 			let div = document.createElement('div');
 			div.className = 'box';
 			div.id = `drop${i}`;
-			div.addEventListener('click', this.handler, false);
+			div.addEventListener('click', event => this.handler(event), false);
 			dropElement.appendChild(div);
 		}
 		for (y = 5; y >= 0; y--) {			// row = y axis value
@@ -34,24 +34,24 @@ Game.prototype = {
 
 	handler: function(event) {
 		let currentPlayer;
-		game.playerTurn === 1 ? currentPlayer = game.player1 : currentPlayer = game.player2;
+		playerTurn === 1 ? currentPlayer = this.player1 : currentPlayer = this.player2;
 		let colNum = event.target.id[4];
-		let coordinate = game.board[colNum][0];
+		let coordinate = this.board[colNum][0];
 		currentPlayer.push(coordinate);
-		game.board[colNum].shift();
+		this.board[colNum].shift();
 		
-		if (game.checkWin(currentPlayer, coordinate)) {
-			game.win();
+		if (this.checkWin(currentPlayer, coordinate)) {
+			this.win();
 			boardUI.winningMove(coordinate);
 		} else {
 			boardUI.updateBoard(currentPlayer);
-			game.playerTurn === 1 ? game.playerTurn = 2 : game.playerTurn = 1;
+			playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
 			boardUI.updateMessage();
 		}
 	},
 
 	checkWin: function(currentPlayer, coordinate) {
-		let possibleWins = game.findWins(coordinate);
+		let possibleWins = this.findWins(coordinate);
 		let connect4;
 
 		for (i = 0; i < 4; i++) {
@@ -59,7 +59,7 @@ Game.prototype = {
 				connect4 = 0;
 				for (k = 0; k < 4; k++) {
 					let item = possibleWins[i][j][k];
-					if (game.searchArrayForItem(currentPlayer, item)) connect4 += 1;
+					if (this.searchArrayForItem(currentPlayer, item)) connect4 += 1;
 					if (connect4 >= 4) {
 						console.log('win!!!!!');
 						return true;
@@ -101,7 +101,7 @@ Game.prototype = {
 	},
 
 	win: function() {
-		if (this.playerTurn === 1) {
+		if (playerTurn === 1) {
 			messageElement.textContent = "Game Over! Player 1 wins!";
 		} else {
 			messageElement.textContent = "Game Over! Player 2 wins!";
@@ -135,7 +135,7 @@ const boardUI = {
 	dropHover: function() {
 		dropElement.addEventListener('mouseover', (event) => {
 			event.target.style.opacity = 1;
-			if (game.playerTurn === 1 && event.target.id !== 'drop') {
+			if (playerTurn === 1 && event.target.id !== 'drop') {
 				event.target.style.background = 'yellow';
 			} else if (event.target.id !== 'drop') {
 				event.target.style.background = 'red';
@@ -152,7 +152,7 @@ const boardUI = {
 	dropClick: function() {
 		dropElement.addEventListener('click', (event) => {
 			if (event.target.id !== 'drop') {
-				if (game.playerTurn === 1) {
+				if (playerTurn === 1) {
 					event.target.style.background = 'yellow';
 				} else {
 					event.target.style.background = 'red';
@@ -165,7 +165,7 @@ const boardUI = {
 		for (i = 0; i < currentPlayer.length; i++) {
 			let divId = currentPlayer[i].toString();
 			let div = document.getElementById(divId);
-			div.className += ` player${game.playerTurn}`;
+			div.className += ` player${playerTurn}`;
 		}
 	},
 
@@ -176,7 +176,7 @@ const boardUI = {
 	},
 
 	updateMessage: function() {
-		if (game.playerTurn === 1) {
+		if (playerTurn === 1) {
 			messageElement.textContent = "Player 1's turn.";
 		} else {
 			messageElement.textContent = "Player 2's turn.";
