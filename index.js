@@ -1,4 +1,5 @@
-const containerElement = document.getElementById('container');
+const boardElement = document.getElementById('board');
+const dropElement = document.getElementById('drop');
 let playerTurn = 1;
 const board = [ [], [], [], [], [], [], [] ];
 const player1 = [];
@@ -8,17 +9,17 @@ const game = {
 	render: function() {
 		for (let i = 0; i < 7; i++) {
 			let div = document.createElement('div');
-			div.className = 'box drop';
+			div.className = 'box';
 			div.id = `drop${i}`;
 			div.addEventListener('click', this.handler, false);
-			containerElement.appendChild(div);
+			dropElement.appendChild(div);
 		}
 		for (y = 5; y >= 0; y--) {			// row = y axis value
 			for (x = 0; x < 7; x++) {		// colums = x axis value
 				let div = document.createElement('div');
 				div.className = 'box';
 				div.id = `${x},${y}`;
-				containerElement.appendChild(div);
+				boardElement.appendChild(div);
 				board[x].unshift([x, y]);		// sort by column for reference
 			}
 		}

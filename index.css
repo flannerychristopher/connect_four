@@ -1,22 +1,43 @@
-#container {
-  width: 490px;
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+body {
+  background: grey; }
+
+img {
+  display: block;
   margin: 0 auto; }
-  #container div.box {
-    border-radius: 50%; }
-  #container div:nth-child(odd) {
+
+#drop {
+  width: 490px;
+  height: 70px;
+  margin: 0 auto; }
+  #drop div {
+    border: 1px solid black; }
+
+#board {
+  background: blue;
+  border-radius: 15px;
+  width: 490px;
+  height: 420px;
+  margin: 0 auto; }
+  #board div:nth-child(odd) {
     background: #999; }
-  #container div:nth-child(even) {
+  #board div:nth-child(even) {
     background: #888; }
-  #container div.drop {
-    background: green; }
-  #container div.player1 {
-    background: blue; }
-  #container div.player2 {
+  #board div.player1 {
+    background: yellow; }
+  #board div.player2 {
     background: red; }
 
 .box {
-  width: 70px;
-  height: 70px;
-  float: left; }
+  width: 50px;
+  height: 50px;
+  float: left;
+  border-radius: 50%;
+  margin: 10px; }
 
 /*# sourceMappingURL=index.css.map */
