@@ -15,8 +15,12 @@ img {
   width: 490px;
   height: 70px;
   margin: 0 auto; }
+  #drop img {
+    height: 50px;
+    width: 50px; }
   #drop div {
-    border: 1px solid black; }
+    background: url("img/drop.png");
+    background-size: contain; }
 
 #board {
   background: blue;

@@ -24,6 +24,7 @@ const game = {
 				board[x].unshift([x, y]);		// sort by column for reference
 			}
 		}
+		boardUI.listen();
 	},
 
 	handler: function(event) {
@@ -86,9 +87,28 @@ const game = {
 	},
 
 }
-game.render();
 
 const boardUI = {
+	listen: function() {
+		this.dropBlink();
+	},
+
+	dropBlink: function() {
+		let visible = true;
+		setInterval(function() {			
+			if (visible) {
+				let value = parseFloat(dropElement.style.opacity);
+				dropElement.style.opacity = (value - 0.05);
+				if (dropElement.style.opacity < 0) visible = false;
+			}	
+			if (!visible) {
+				let value = parseFloat(dropElement.style.opacity);
+				dropElement.style.opacity = (value += .05);
+				if (dropElement.style.opacity > 1) visible = true;
+			}
+		}, 100);
+	},
+
 	dropHover: function() {
 
 	},
@@ -111,3 +131,10 @@ const boardUI = {
 		messageElement.textContent = message;
 	}
 }
+
+game.render();
+// to do: message in case of draw (board array is empty?)
+// hover drop
+// animate the chip dropping
+// intro message
+// game over/win message
