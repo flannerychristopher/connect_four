@@ -29,7 +29,6 @@ Game.prototype = {
 				this.board[x].unshift([x, y]);		// sort by column for reference
 			}
 		}
-		// boardUI.listen();
 	},
 
 	handler: function(event) {
@@ -41,12 +40,11 @@ Game.prototype = {
 		this.board[colNum].shift();
 		
 		if (this.checkWin(currentPlayer, coordinate)) {
-			this.win();
 			boardUI.winningMove(coordinate);
 		} else {
 			boardUI.updateBoard(currentPlayer);
 			playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
-			boardUI.updateMessage();
+			boardUI.updateMessage();	
 		}
 	},
 
@@ -59,7 +57,9 @@ Game.prototype = {
 				connect4 = 0;
 				for (k = 0; k < 4; k++) {
 					let item = possibleWins[i][j][k];
-					if (this.searchArrayForItem(currentPlayer, item)) connect4 += 1;
+					if (this.searchArrayForItem(currentPlayer, item)) {
+						connect4 += 1;
+					}
 					if (connect4 >= 4) {
 						console.log('win!!!!!');
 						return true;
@@ -98,14 +98,6 @@ Game.prototype = {
 			}
 		}
 		return false;
-	},
-
-	win: function() {
-		if (playerTurn === 1) {
-			messageElement.textContent = "Game Over! Player 1 wins!";
-		} else {
-			messageElement.textContent = "Game Over! Player 2 wins!";
-		}	
 	},
 
 }
@@ -176,18 +168,35 @@ const boardUI = {
 		}
 	},
 
+	updateMessage: function() {
+		if (playerTurn === 1) {
+			messageElement.textContent = "Player 1's turn.";
+			messageElement.style.color = 'yellow';
+		} else {
+			messageElement.textContent = "Player 2's turn.";
+			messageElement.style.color = 'red';
+		}
+	},
+
 	winningMove: function(coordinate) {
 		let divId = coordinate.toString();
 		let div = document.getElementById(divId);
 		div.style.background = 'black';
+		if (playerTurn === 1) {
+			messageElement.textContent = "Game Over! Player 1 wins!";
+		} else {
+			messageElement.textContent = "Game Over! Player 2 wins!";
+		}
+		let button = document.createElement('button');
+		button.textContent = 'play again? click me!';
+		button.addEventListener('click', event => this.clearBoard(event), false);
+		messageElement.appendChild(button);
 	},
 
-	updateMessage: function() {
-		if (playerTurn === 1) {
-			messageElement.textContent = "Player 1's turn.";
-		} else {
-			messageElement.textContent = "Player 2's turn.";
-		}
+	clearBoard: function() {
+		boardElement.innerHTML = '';
+		dropElement.innerHTML = '';
+		this.newGame();
 	}
 }
 
@@ -195,5 +204,3 @@ boardUI.newGame();
 
 // to do: message in case of draw (board array is empty?)
 // animate the chip dropping
-// intro message
-// game over/win message
