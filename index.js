@@ -91,6 +91,8 @@ const game = {
 const boardUI = {
 	listen: function() {
 		this.dropBlink();
+		this.dropHover();
+		this.dropClick();
 	},
 
 	dropBlink: function() {
@@ -100,8 +102,7 @@ const boardUI = {
 				let value = parseFloat(dropElement.style.opacity);
 				dropElement.style.opacity = (value - 0.05);
 				if (dropElement.style.opacity < 0) visible = false;
-			}	
-			if (!visible) {
+			} else if (!visible) {
 				let value = parseFloat(dropElement.style.opacity);
 				dropElement.style.opacity = (value += .05);
 				if (dropElement.style.opacity > 1) visible = true;
@@ -110,7 +111,32 @@ const boardUI = {
 	},
 
 	dropHover: function() {
+		dropElement.addEventListener('mouseover', (event) => {
+			event.target.style.opacity = 1;
+			if (playerTurn === 1 && event.target.id !== 'drop') {
+				event.target.style.background = 'yellow';
+			} else if (event.target.id !== 'drop') {
+				event.target.style.background = 'red';
+			}
+		}, false);
 
+		dropElement.addEventListener('mouseout', (event) => {
+			if (event.target.id !== 'drop') {
+				event.target.style.background = '#fff';
+			}
+		}, false);
+	},
+
+	dropClick: function() {
+		dropElement.addEventListener('click', (event) => {
+			if (event.target.id !== 'drop') {
+				if (playerTurn === 1) {
+					event.target.style.background = 'yellow';
+				} else {
+					event.target.style.background = 'red';
+				}
+			}
+		}, false);
 	},
 
 	updateBoard: function(currentPlayer) {
