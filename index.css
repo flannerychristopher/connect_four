@@ -6,7 +6,8 @@ html {
 
 body {
   background: grey;
-  font-family: "Mukta", Verdana, sans-serif; }
+  font-family: "Mukta", Verdana, sans-serif;
+  letter-spacing: 3px; }
 
 img {
   display: block;
@@ -22,6 +23,14 @@ img {
   #drop div {
     background: #fff;
     background-size: contain; }
+  #drop button {
+    display: block;
+    margin: 0 auto;
+    border: 5px solid yellow;
+    color: red;
+    font-size: 1.5em;
+    border-radius: 15px;
+    padding: 5px; }
 
 #board {
   background: blue;
@@ -46,25 +55,16 @@ img {
   margin: 10px; }
 
 #message {
-  margin: 15px auto;
+  margin: 15px auto 0 auto;
   padding: 15px;
   width: 490px;
   min-height: 120px;
-  line-height: 100px;
+  line-height: 80px;
   text-align: center;
   font-weight: bold;
   font-size: 1.7em;
   background: blue;
   border-radius: 15px;
   color: yellow; }
-  #message button {
-    display: block;
-    margin: 0 auto;
-    background: blue;
-    border: 5px solid yellow;
-    color: red;
-    font-size: 0.75em;
-    border-radius: 15px;
-    padding: 15px; }
 
 /*# sourceMappingURL=index.css.map */
