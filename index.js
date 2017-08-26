@@ -6,7 +6,14 @@ const board = [ [], [], [], [], [], [], [] ];
 const player1 = [];
 const player2 = [];
 
-const game = {
+// const game = {
+function Game() {
+	
+}
+
+Game.prototype = {
+	constructor: Game,
+
 	render: function() {
 		for (let i = 0; i < 7; i++) {
 			let div = document.createElement('div');
@@ -100,13 +107,8 @@ const game = {
 			messageElement.textContent = "Game Over! Player 1 wins!";
 		} else {
 			messageElement.textContent = "Game Over! Player 2 wins!";
-		}
-		
+		}	
 	},
-
-	reset: function() {
-
-	}
 
 }
 
@@ -176,16 +178,15 @@ const boardUI = {
 	},
 
 	updateMessage: function() {
-		let message;
 		if (playerTurn === 1) {
-			message = "Player 1's turn.";
+			messageElement.textContent = "Player 1's turn.";
 		} else {
-			message = "Player 2's turn.";
+			messageElement.textContent = "Player 2's turn.";
 		}
-		messageElement.textContent = message;
 	}
 }
 
+game = new Game();
 game.render();
 // to do: message in case of draw (board array is empty?)
 // animate the chip dropping
