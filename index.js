@@ -1,14 +1,12 @@
 const boardElement = document.getElementById('board');
 const dropElement = document.getElementById('drop');
 const messageElement = document.getElementById('message');
-let playerTurn = 1;
-const board = [ [], [], [], [], [], [], [] ];
-const player1 = [];
-const player2 = [];
 
-// const game = {
 function Game() {
-	
+	this.board = [ [], [], [], [], [], [], [] ];
+	this.player1 = [];
+	this.player2 = [];
+	this.playerTurn = 1;
 }
 
 Game.prototype = {
@@ -28,7 +26,7 @@ Game.prototype = {
 				div.className = 'box';
 				div.id = `${x},${y}`;
 				boardElement.appendChild(div);
-				board[x].unshift([x, y]);		// sort by column for reference
+				this.board[x].unshift([x, y]);		// sort by column for reference
 			}
 		}
 		boardUI.listen();
@@ -36,18 +34,18 @@ Game.prototype = {
 
 	handler: function(event) {
 		let currentPlayer;
-		playerTurn === 1 ? currentPlayer = player1 : currentPlayer = player2;
+		game.playerTurn === 1 ? currentPlayer = game.player1 : currentPlayer = game.player2;
 		let colNum = event.target.id[4];
-		let coordinate = board[colNum][0];
+		let coordinate = game.board[colNum][0];
 		currentPlayer.push(coordinate);
-		board[colNum].shift();
+		game.board[colNum].shift();
 		
 		if (game.checkWin(currentPlayer, coordinate)) {
 			game.win();
 			boardUI.winningMove(coordinate);
 		} else {
 			boardUI.updateBoard(currentPlayer);
-			playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
+			game.playerTurn === 1 ? game.playerTurn = 2 : game.playerTurn = 1;
 			boardUI.updateMessage();
 		}
 	},
@@ -103,7 +101,7 @@ Game.prototype = {
 	},
 
 	win: function() {
-		if (playerTurn === 1) {
+		if (this.playerTurn === 1) {
 			messageElement.textContent = "Game Over! Player 1 wins!";
 		} else {
 			messageElement.textContent = "Game Over! Player 2 wins!";
@@ -137,7 +135,7 @@ const boardUI = {
 	dropHover: function() {
 		dropElement.addEventListener('mouseover', (event) => {
 			event.target.style.opacity = 1;
-			if (playerTurn === 1 && event.target.id !== 'drop') {
+			if (game.playerTurn === 1 && event.target.id !== 'drop') {
 				event.target.style.background = 'yellow';
 			} else if (event.target.id !== 'drop') {
 				event.target.style.background = 'red';
@@ -154,7 +152,7 @@ const boardUI = {
 	dropClick: function() {
 		dropElement.addEventListener('click', (event) => {
 			if (event.target.id !== 'drop') {
-				if (playerTurn === 1) {
+				if (game.playerTurn === 1) {
 					event.target.style.background = 'yellow';
 				} else {
 					event.target.style.background = 'red';
@@ -167,7 +165,7 @@ const boardUI = {
 		for (i = 0; i < currentPlayer.length; i++) {
 			let divId = currentPlayer[i].toString();
 			let div = document.getElementById(divId);
-			div.className += ` player${playerTurn}`;
+			div.className += ` player${game.playerTurn}`;
 		}
 	},
 
@@ -178,7 +176,7 @@ const boardUI = {
 	},
 
 	updateMessage: function() {
-		if (playerTurn === 1) {
+		if (game.playerTurn === 1) {
 			messageElement.textContent = "Player 1's turn.";
 		} else {
 			messageElement.textContent = "Player 2's turn.";
