@@ -34,11 +34,6 @@ const game = {
 		game.checkWin(currentPlayer, coordinate);
 		game.update(currentPlayer);
 		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
-
-		// console.log(`clicked on column ${colNum} : coordinate ${coordinate}`);
-		// console.log(`p1 has : ${player1}`);
-		// console.log(`p2 has : ${player2}`);
-		// console.log(`column ${colNum} is now ${board[colNum]}`);
 	},
 
 	update: function(currentPlayer) {
@@ -50,7 +45,6 @@ const game = {
 	},
 
 	checkWin: function(currentPlayer, coordinate) {
-
 		let possibleWins = game.findWins(coordinate);
 		let connect4;
 
@@ -67,23 +61,20 @@ const game = {
 	},
 
 	findWins: function(source) {
-		let possibleWins =  [	[ [], [], [], [], ],
-		                    	[ [], [], [], [], ],
-		                    	[ [], [], [], [], ],
+		let possibleWins =  [	[ [], [], [], [], ],		// nested rray of win scenarios
+		                    	[ [], [], [], [], ],		// each scenarios is compared
+		                    	[ [], [], [], [], ],		// to the player's array
 		                    	[ [], [], [], [], ],	];
 
-		for (i = 0; i < 4; i++) {
-		    for (j = -3; j <= 0; j++) {
+		for (i = 0; i < 4; i++) {							// 4 directions
+		    for (j = -3; j <= 0; j++) {						// 4 combos each direction
 		      let item0 = [source[0], source[1] + j + i]; 			// up and down
 		      possibleWins[0][i].push(item0);
-		      
 		      let item1 = [source[0] + j + i, source[1] + j + i];	// bot L to top R
 		      possibleWins[1][i].push(item1);
-		      
 		      let item2 = [source[0] + j + i, source[1]];			// side to side
 		      possibleWins[2][i].push(item2);      
-
-		      let item3 = [source[0] + j + i, source[1] - j - i];
+		      let item3 = [source[0] + j + i, source[1] - j - i];	// top R to bot L
 		      possibleWins[3][i].push(item3);  
 		    }    
 		}
