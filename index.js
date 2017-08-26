@@ -1,5 +1,6 @@
 const boardElement = document.getElementById('board');
 const dropElement = document.getElementById('drop');
+const messageElement = document.getElementById('message');
 let playerTurn = 1;
 const board = [ [], [], [], [], [], [], [] ];
 const player1 = [];
@@ -33,16 +34,9 @@ const game = {
 		currentPlayer.push(coordinate);
 		board[colNum].shift();
 		game.checkWin(currentPlayer, coordinate);
-		game.update(currentPlayer);
+		boardUI.updateBoard(currentPlayer);
 		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
-	},
-
-	update: function(currentPlayer) {
-		for (i = 0; i < currentPlayer.length; i++) {
-			let divId = currentPlayer[i].toString();
-			let div = document.getElementById(divId);
-			div.className += ` player${playerTurn}`;
-		}
+		boardUI.updateMessage();
 	},
 
 	checkWin: function(currentPlayer, coordinate) {
@@ -93,3 +87,27 @@ const game = {
 
 }
 game.render();
+
+const boardUI = {
+	dropHover: function() {
+
+	},
+
+	updateBoard: function(currentPlayer) {
+		for (i = 0; i < currentPlayer.length; i++) {
+			let divId = currentPlayer[i].toString();
+			let div = document.getElementById(divId);
+			div.className += ` player${playerTurn}`;
+		}
+	},
+
+	updateMessage: function() {
+		let message;
+		if (playerTurn === 1) {
+			message = "Player 1's turn.";
+		} else {
+			message = "Player 2's turn.";
+		}
+		messageElement.textContent = message;
+	}
+}
