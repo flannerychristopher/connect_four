@@ -32,6 +32,7 @@ const game = {
 
 		currentPlayer.push(coordinate);
 		board[colNum].shift();
+		game.checkWin(currentPlayer, coordinate);
 		game.update(currentPlayer);
 		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
 
@@ -47,25 +48,22 @@ const game = {
 			let div = document.getElementById(divId);
 			div.className += ` player${playerTurn}`;
 		}
-		game.checkWin(currentPlayer);
 	},
 
-	checkWin: function(currentPlayer) {
-		for (let i = 0; i < currentPlayer.length; i++) {
-			let item = currentPlayer[i];
-			let possibleWins = game.findWins(item);
-			console.log(possibleWins.join(' ------------- '));
-			let connect4 = 0;
+	checkWin: function(currentPlayer, coordinate) {
+		let possibleWins = game.findWins(coordinate);
+		let connect4;
 
-			for (let i = 0; i < currentPlayer.length; i++) {	
-				if (game.searchArrayForItem(possibleWins, currentPlayer[i])) {
-					connect4 += 1;
-					// console.log(connect4);
+		for (i = 0; i < 4; i++) {
+			for (j = 0; j < 6; j++) {
+				connect4 = 0;
+				for (k = 0; k < 4; k++) {
+					let item = possibleWins[i][j][k];
+					if (game.searchArrayForItem(currentPlayer, item)) connect4 += 1;
+					if (connect4 >= 4) console.log('win!!!!!');
 				}
 			}
-			if (connect4 === 4) console.log('---------win!-----------');
 		}
-
 	},
 
 	findWins: function(source) {
