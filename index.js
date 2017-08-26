@@ -34,10 +34,15 @@ const game = {
 		let coordinate = board[colNum][0];
 		currentPlayer.push(coordinate);
 		board[colNum].shift();
-		game.checkWin(currentPlayer, coordinate);
-		boardUI.updateBoard(currentPlayer);
-		playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
-		boardUI.updateMessage();
+		
+		if (game.checkWin(currentPlayer, coordinate)) {
+			game.win();
+			boardUI.winningMove(coordinate);
+		} else {
+			boardUI.updateBoard(currentPlayer);
+			playerTurn === 1 ? playerTurn = 2 : playerTurn = 1;
+			boardUI.updateMessage();
+		}
 	},
 
 	checkWin: function(currentPlayer, coordinate) {
@@ -50,10 +55,14 @@ const game = {
 				for (k = 0; k < 4; k++) {
 					let item = possibleWins[i][j][k];
 					if (game.searchArrayForItem(currentPlayer, item)) connect4 += 1;
-					if (connect4 >= 4) console.log('win!!!!!');
+					if (connect4 >= 4) {
+						console.log('win!!!!!');
+						return true;
+					}
 				}
 			}
 		}
+		return false;
 	},
 
 	findWins: function(source) {
@@ -85,6 +94,19 @@ const game = {
 		}
 		return false;
 	},
+
+	win: function() {
+		if (playerTurn === 1) {
+			messageElement.textContent = "Game Over! Player 1 wins!";
+		} else {
+			messageElement.textContent = "Game Over! Player 2 wins!";
+		}
+		
+	},
+
+	reset: function() {
+
+	}
 
 }
 
@@ -147,6 +169,12 @@ const boardUI = {
 		}
 	},
 
+	winningMove: function(coordinate) {
+		let divId = coordinate.toString();
+		let div = document.getElementById(divId);
+		div.style.background = 'black';
+	},
+
 	updateMessage: function() {
 		let message;
 		if (playerTurn === 1) {
@@ -160,7 +188,6 @@ const boardUI = {
 
 game.render();
 // to do: message in case of draw (board array is empty?)
-// hover drop
 // animate the chip dropping
 // intro message
 // game over/win message
