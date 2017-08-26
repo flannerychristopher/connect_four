@@ -29,7 +29,7 @@ Game.prototype = {
 				this.board[x].unshift([x, y]);		// sort by column for reference
 			}
 		}
-		boardUI.listen();
+		// boardUI.listen();
 	},
 
 	handler: function(event) {
@@ -111,7 +111,14 @@ Game.prototype = {
 }
 
 const boardUI = {
-	listen: function() {
+	newGame: function() {
+		if (playerTurn === 1) {
+			messageElement.textContent = "New game! Player 1's turn."
+		} else {
+			messageElement.textContent = "New game! Player 2's turn."
+		}
+		let game = new Game();
+		game.render();
 		this.dropBlink();
 		this.dropHover();
 		this.dropClick();
@@ -184,8 +191,8 @@ const boardUI = {
 	}
 }
 
-game = new Game();
-game.render();
+boardUI.newGame();
+
 // to do: message in case of draw (board array is empty?)
 // animate the chip dropping
 // intro message
