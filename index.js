@@ -1,7 +1,7 @@
 const boardElement = document.getElementById('board');
 const dropElement = document.getElementById('drop');
 const messageElement = document.getElementById('message');
-var playerTurn = 1;
+var playerTurn = 1; // turns persist through games, winner gets first move
 
 function Game() {
 	this.board = [ [], [], [], [], [], [], [] ];
@@ -55,7 +55,7 @@ Game.prototype = {
 
 	checkDraw: function() {
 		let emptyColumns = 0;
-		game.board.forEach( (item) => {
+		this.board.forEach( (item) => {
 		    if (!item.length) emptyColumns += 1;
 		});
 		if (emptyColumns === 7) {
@@ -123,8 +123,10 @@ const boardUI = {
 		game.render();
 		if (playerTurn === 1) {
 			messageElement.textContent = "New game! Player 1's turn."
+			messageElement.style.border = '15px double yellow';
 		} else {
 			messageElement.textContent = "New game! Player 2's turn."
+			messageElement.style.border = '15px double red';
 		}
 		this.dropBlink();
 		this.dropHover();
@@ -143,7 +145,7 @@ const boardUI = {
 				dropElement.style.opacity = (value += .05);
 				if (dropElement.style.opacity > 1) visible = true;
 			}
-		}, 100);
+		}, 110);
 	},
 
 	dropHover: function() {
@@ -187,9 +189,11 @@ const boardUI = {
 		if (playerTurn === 1) {
 			messageElement.textContent = "Player 1's turn.";
 			messageElement.style.color = 'yellow';
+			messageElement.style.border = '15px double yellow';
 		} else {
 			messageElement.textContent = "Player 2's turn.";
 			messageElement.style.color = 'red';
+			messageElement.style.border = '15px double red';
 		}
 	},
 
@@ -228,5 +232,4 @@ const boardUI = {
 
 // const game = new Game();
 boardUI.newGame();
-
 // animate the chip dropping

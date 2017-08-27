@@ -5,7 +5,7 @@ html {
   box-sizing: inherit; }
 
 body {
-  background: grey;
+  /*background: #d1d1d1 */
   font-family: "Mukta", Verdana, sans-serif;
   letter-spacing: 3px; }
 
@@ -21,7 +21,9 @@ img {
     height: 50px;
     width: 50px; }
   #drop div {
-    background: #fff;
+    /*background: #fff */
+    /*background: #d1d1d1 */
+    border: 2px solid #d1d1d1;
     background-size: contain; }
   #drop button {
     display: block;
@@ -33,7 +35,7 @@ img {
     padding: 5px; }
 
 #board {
-  background: blue;
+  background: #3041ff;
   border-radius: 15px;
   width: 490px;
   height: 420px;
@@ -63,7 +65,7 @@ img {
   text-align: center;
   font-weight: bold;
   font-size: 1.7em;
-  background: blue;
+  background: #3041ff;
   border-radius: 15px;
   color: yellow; }
 
