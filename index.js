@@ -1,7 +1,7 @@
 const boardElement = document.getElementById('board');
 const dropElement = document.getElementById('drop');
 const messageElement = document.getElementById('message');
-let playerTurn = 1;
+var playerTurn = 1;
 
 function Game() {
 	this.board = [ [], [], [], [], [], [], [] ];
@@ -41,6 +41,10 @@ Game.prototype = {
 			this.board[colNum].shift();
 			if (this.checkWin(currentPlayer, coordinate)) {
 				boardUI.winningMove(coordinate);
+			} else if (this.checkDraw()) {
+				boardUI.normalMove(currentPlayer);
+				boardUI.newGameButton();
+				messageElement.textContent = "It's a draw!";
 			} else {
 				boardUI.normalMove(currentPlayer);
 			}
@@ -49,10 +53,20 @@ Game.prototype = {
 		}
 	},
 
+	checkDraw: function() {
+		let emptyColumns = 0;
+		game.board.forEach( (item) => {
+		    if (!item.length) emptyColumns += 1;
+		});
+		if (emptyColumns === 7) {
+			return true;
+		}
+		return false;
+	},
+
 	checkWin: function(currentPlayer, coordinate) {
 		let possibleWins = this.findWins(coordinate);
 		let connect4;
-
 		for (i = 0; i < 4; i++) {
 			for (j = 0; j < 4; j++) {
 				connect4 = 0;
@@ -105,7 +119,7 @@ Game.prototype = {
 
 const boardUI = {
 	newGame: function() {
-		let game = new Game();
+		var game = new Game();
 		game.render();
 		if (playerTurn === 1) {
 			messageElement.textContent = "New game! Player 1's turn."
@@ -194,6 +208,10 @@ const boardUI = {
 		} else {
 			messageElement.textContent = "Game Over! Player 2 wins!";
 		}
+		this.newGameButton();
+	},
+
+	newGameButton: function() {
 		dropElement.innerHTML = '';
 		let button = document.createElement('button');
 		button.textContent = 'play again? click me!';
@@ -208,7 +226,7 @@ const boardUI = {
 	}
 }
 
+// const game = new Game();
 boardUI.newGame();
 
-// to do: message in case of draw (board array is empty?)
 // animate the chip dropping
