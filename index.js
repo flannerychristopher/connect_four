@@ -55,7 +55,7 @@ Game.prototype = {
 
 	checkDraw: function() {
 		let emptyColumns = 0;
-		this.board.forEach( (item) => {
+		this.board.forEach( item => {
 		    if (!item.length) emptyColumns += 1;
 		});
 		if (emptyColumns === 7) {
@@ -116,7 +116,6 @@ Game.prototype = {
 	},
 
 }
-
 const boardUI = {
 	newGame: function() {
 		var game = new Game();
@@ -230,6 +229,4 @@ const boardUI = {
 	}
 }
 
-// const game = new Game();
 boardUI.newGame();
-// animate the chip dropping
