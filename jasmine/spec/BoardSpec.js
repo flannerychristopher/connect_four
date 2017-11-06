@@ -1,32 +1,18 @@
 describe("boardUI", () => {
-  let newGame;
 
   beforeEach(() => {
-    newGame = new Game();
-    spyOn(newGame, 'render');
-    newGame.render();
+    // newGame = new Game();
+    // spyOn(newGame, 'render');
+    // newGame.render();
+    // boardUI.newGame();
   });
 
-  describe(".render()", () => {
+  describe(".newGame()", () => {
     var prevMessage;
-
-    // beforeEach(() => {
-    //   newGame = new Game();
-    //   spyOn(newGame, 'render');
-    //   newGame.render();
-    // })
-
-    it("can create a new Game", () => {
-      expect(newGame && playerTurn).toBeDefined();
-      expect(newGame.board).toContain(jasmine.any(Array));
-    });
-
-    it("can create player arrays that are empty", () => {
-      expect(newGame.player1 && newGame.player2).not.toContain(jasmine.anything());
-    });
 
     it("renders a message for the messageElement in DOM", () => {
       expect(messageElement.textContent).toBeDefined();
+      expect(messageElement.style.border).toEqual(jasmine.any(String));
     });
 
   });
@@ -108,11 +94,6 @@ describe("boardUI", () => {
 
   describe(".dropClick()", () => {
     let drop0;
-    let mouseClick = new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true,
-      view: window
-    });
 
     beforeEach(() => {
       drop0 = document.getElementById('drop0');
@@ -248,7 +229,6 @@ describe("boardUI", () => {
     it("calls boardUI.newGame() successfully", () => {
       expect(boardUI.newGame).toHaveBeenCalled();
     });
-
   });
 
   afterAll(() => {
