@@ -71,9 +71,6 @@ Game.prototype = {
 				let upToDown = source[1] - j - i;
 				let leftToRight = source[0] + j + i;
 
-				// let botLtopR = source[1] + j + i;
-				// let topLbotR = source[1] - j - i;
-
 				if (downToUp > -1 && downToUp < 6) {
 					possibleWins[0][i].push([source[0], downToUp]); 		// down to up
 
