@@ -67,29 +67,31 @@ Game.prototype = {
 		for (i = 0; i < 4; i++) {							 	// 4 directions
 			for (j = -3; j <= 0; j++) {				  	// 4 combos each direction
 
-				let upToDown = source[1] + j + i;
+				let downToUp = source[1] + j + i;
+				let upToDown = source[1] - j - i;
 				let leftToRight = source[0] + j + i;
-				let botLtopR = source[1] + j + i;
-				let botRtopL = source[1] - j - i;
 
-				if (upToDown > -1 && upToDown < 6) {
-					possibleWins[0][i].push([source[0], upToDown]); // up to down
+				// let botLtopR = source[1] + j + i;
+				// let topLbotR = source[1] - j - i;
+
+				if (downToUp > -1 && downToUp < 6) {
+					possibleWins[0][i].push([source[0], downToUp]); 		// down to up
 
 					if (leftToRight > -1 && leftToRight < 7) {
-						possibleWins[1][i].push([leftToRight, upToDown]); // bot L to top R
+						possibleWins[1][i].push([leftToRight, downToUp]); // bot L to top R
 					}
 				}
 
 				if (leftToRight > -1 && leftToRight < 7) {
 					possibleWins[2][i].push([leftToRight, source[1]]); // side to side
 
-					if (botRtopL > -1 && botLtopR < 7) {
-						possibleWins[3][i].push([leftToRight, botRtopL]);	// bot R to top L
+					if (upToDown > -1 && upToDown < 6) {
+						possibleWins[3][i].push([leftToRight, upToDown]);	// top L to bot R
 					}
 				}
 			}
 		}
-
+		console.log(possibleWins);
 		return possibleWins;
 	},
 
